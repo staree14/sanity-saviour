@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanity Saviour</title>
-    <link rel="icon" type="png" href="file.png">
+    <link rel="icon" type="image/png" href="file.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-
         * {
             margin: 0;
             padding: 0;
@@ -26,6 +25,7 @@
             background: linear-gradient(to right, #a1c4fd, #c2e9fb);
             padding: 20px;
             text-align: center;
+            position: relative;
         }
 
         header h1 {
@@ -38,6 +38,7 @@
             color: #fff;
             font-size: 1.2em;
         }
+
         .login-btn {
             position: absolute;
             top: 20px;
@@ -59,6 +60,7 @@
         nav {
             display: flex;
             justify-content: center;
+            flex-wrap: wrap;
             background: #fff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
@@ -69,6 +71,7 @@
             color: #333;
             font-weight: 600;
             transition: color 0.3s;
+            text-align: center;
         }
 
         nav a:hover {
@@ -83,7 +86,12 @@
         }
 
         .hero h2 {
-            font-size: 2.5em;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
             margin-bottom: 20px;
         }
 
@@ -96,6 +104,7 @@
             color: white;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin: 10px;
         }
 
         .hero button:hover {
@@ -104,13 +113,18 @@
 
         .features {
             display: flex;
-            justify-content: space-around;
+            flex
+ flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
             padding: 50px 20px;
         }
 
         .features .feature {
             text-align: center;
             max-width: 300px;
+            flex: 1 1 250px;
+            margin: 10px;
         }
 
         .features .feature img {
@@ -128,6 +142,7 @@
             color: #fff;
             padding: 20px;
             margin-top: 20px;
+            font-size: 0.9em;
         }
 
         footer a {
@@ -138,7 +153,60 @@
         footer a:hover {
             text-decoration: underline;
         }
-        
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .login-btn {
+                top: 10px;
+                right: 10px;
+                font-size: 0.9em;
+                padding: 8px 12px;
+            }
+
+            .hero h2 {
+                font-size: 1.8em;
+            }
+
+            .hero p {
+                font-size: 1em;
+            }
+
+            nav a {
+                padding: 10px;
+            }
+
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .features .feature {
+                flex: 1 1 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header p {
+                font-size: 1em;
+            }
+
+            .hero h2 {
+                font-size: 1.5em;
+            }
+
+            .hero button {
+                font-size: 0.9em;
+                padding: 8px 15px;
+            }
+
+            footer {
+                font-size: 0.8em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -156,10 +224,10 @@
     </nav>
 
     <section class="hero" id="home">
-        <h2>Made by students for heroes </h2>
+        <h2>Made by Students for Heroes</h2>
         <p>Discover tools, assessments, and a supportive community to help you thrive.</p>
-        <button onclick="window.location.href='quiz2.html';">Take the Assessment Quiz</button>
-        <button onclick="window.location.href='comunity.html';">Join the community</button>
+        <button onclick="window.location.href='quiz2.html';">Take the Assessment Quiz</button>
+        <button onclick="window.location.href='comunity.html';">Join the Community</button>
     </section>
 
     <section class="features">

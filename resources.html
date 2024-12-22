@@ -3,7 +3,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resources</title>
-    <link rel="icon" type="png" href="file.png">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -26,6 +25,48 @@
             background-color: #003d80;
             color: white;
         }
+        nav {
+            margin: 1em auto;
+            text-align: center;
+            max-width: 800px;
+            background-color: #a1c4fd;
+            border: 1px solid #0056b3;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #0056b3;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        section {
+            padding: 2em;
+            max-width: 800px;
+            margin: 20px auto;
+            background: linear-gradient(45deg, #a1c4fd, #c2e9fb);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li {
+            margin: 0.5em 0;
+        }
+        ul li a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        ul li a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -33,9 +74,38 @@
         <h1>Resources</h1>
         <p>Access valuable information for your practice.</p>
     </header>
+    <nav>
+        <a href="#videos">Videos</a>
+        <a href="#meditation">Meditation Resources</a>
+        <a href="#other-resources">Other Resources</a>
+    </nav>
     <div class="container">
         <p>Explore our curated resources for health professionals.</p>
     </div>
+    <section id="videos">
+        <h2>Helpful YouTube Videos</h2>
+        <ul>
+            <li><a href="https://www.youtube.com/watch?v=ZToicYcHIOU" target="_blank">5-Minute Meditation You Can Do Anywhere</a></li>
+            <li><a href="https://www.youtube.com/watch?v=inpok4MKVLM" target="_blank">10-Minute Guided Meditation for Stress Relief</a></li>
+            <li><a href="https://www.youtube.com/watch?v=Wz-7HOrDlyk" target="_blank">Managing Burnout in Healthcare Workers</a></li>
+        </ul>
+    </section>
+    <section id="meditation">
+        <h2>Meditation Resources</h2>
+        <ul>
+            <li><a href="https://www.headspace.com/" target="_blank">Headspace: Meditation and Mindfulness App</a></li>
+            <li><a href="https://www.calm.com/" target="_blank">Calm: Guided Meditation and Sleep Stories</a></li>
+            <li><a href="https://insighttimer.com/" target="_blank">Insight Timer: Free Meditation App</a></li>
+        </ul>
+    </section>
+    <section id="other-resources">
+        <h2>Other Resources</h2>
+        <ul>
+            <li><a href="https://www.ama-assn.org/delivering-care/public-health/mental-health-resources-health-care-workers" target="_blank">Mental Health Resources for Healthcare Workers (AMA)</a></li>
+            <li><a href="https://www.mindful.org/" target="_blank">Mindful: Resources for Mindfulness Practices</a></li>
+            <li><a href="https://psychhub.com/" target="_blank">Psych Hub: Mental Health Education</a></li>
+        </ul>
+    </section>
     <footer>
         <p>&copy; 2024 Health Workers Community. All rights reserved.</p>
     </footer>

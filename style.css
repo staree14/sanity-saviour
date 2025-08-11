@@ -130,9 +130,9 @@ footer.dark-mode {
 
 .banner img {
     max-width: 80%;
-    height: 700px;
+    height: auto; /* better for responsiveness */
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: block;
 }
 
 /* Dark overlay for better text visibility */
@@ -213,6 +213,7 @@ footer.dark-mode {
     transform: translateY(-10px);
     box-shadow: 0 8px 25px rgba(0,0,0,0.2);
 }
+
 
 
 

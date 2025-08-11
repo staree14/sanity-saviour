@@ -14,22 +14,14 @@
             color: #333;
         }
         .contact-form {
-            background: rgb(255, 255, 255);
+            background: #fff;
             padding: 25px;
             border-radius: 10px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
             width: 350px;
-            transition: all 0.3s ease;
         }
-        .contact-form h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .contact-form label {
-            font-weight: bold;
-            margin-top: 10px;
-            display: block;
-        }
+        .contact-form h2 { text-align: center; margin-bottom: 20px; }
+        .contact-form label { font-weight: bold; margin-top: 10px; display: block; }
         .contact-form input,
         .contact-form textarea {
             width: 100%;
@@ -37,134 +29,171 @@
             margin-top: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 14px;
-            background-color: white;
-            color: #333;
-        }
-        .contact-form textarea {
-            resize: none;
         }
         .contact-form button {
             width: 100%;
             padding: 10px;
-            border: none;
-            background-color: #007BFF;
-            color: white;
-            font-size: 16px;
-            border-radius: 5px;
             margin-top: 15px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
         }
-        .contact-form button:hover {
-            background-color: #0056b3;
-        }
-        .error {
-            color: red;
-            font-size: 12px;
-            margin-top: 3px;
-        }
+        .contact-form button:hover { background-color: #0056b3; }
+        .error { color: red; font-size: 12px; }
+        .success { color: green; font-size: 14px; margin-top: 10px; text-align: center; }
 
-        /* 🌙 Dark Mode */
+        /* Dark Mode */
         @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #1e1e1e;
-                color: #f1f1f1;
-            }
-            .contact-form {
-                background: #2c2c2c;
-                box-shadow: 0px 4px 12px rgba(255, 255, 255, 0.05);
-            }
-            .contact-form input,
-            .contact-form textarea {
-                background-color: #3a3a3a;
-                border: 1px solid #555;
-                color: #f1f1f1;
-            }
-            .contact-form button {
-                background-color: #2196F3;
-            }
-            .contact-form button:hover {
-                background-color: #1976D2;
-            }
-            .error {
-                color: #ff7675;
-            }
+            body { background-color: #1e1e1e; color: #f1f1f1; }
+            .contact-form { background: #2c2c2c; }
+            .contact-form input, .contact-form textarea { background-color: #3a3a3a; border: 1px solid #555; color: #f1f1f1; }
+            .contact-form button { background-color: #2196F3; }
+            .contact-form button:hover { background-color: #1976D2; }
+            .error { color: #ff7675; }
         }
     </style>
 </head>
 <body>
 
-    <div class="contact-form">
-        <h2>Contact Us</h2>
-        <form id="contactForm" onsubmit="return validateForm()">
-            
-            <label for="name">Full Name:</label>
-            <input type="text" id="name" name="name" placeholder="Enter your name">
-            <div class="error" id="nameError"></div>
+<div class="contact-form">
+    <h2>Contact Us</h2>
+    <form id="contactForm" onsubmit="return handleSubmit(event)">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name">
+        <div class="error" id="nameError"></div>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email">
-            <div class="error" id="emailError"></div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email">
+        <div class="error" id="emailError"></div>
 
-            <label for="subject">Subject:</label>
-            <input type="text" id="subject" name="subject" placeholder="Enter subject">
-            <div class="error" id="subjectError"></div>
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" placeholder="Enter subject">
+        <div class="error" id="subjectError"></div>
 
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" rows="4" placeholder="Type your message"></textarea>
-            <div class="error" id="messageError"></div>
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="4" placeholder="Type your message"></textarea>
+        <div class="error" id="messageError"></div>
 
-            <button type="submit">Send Message</button>
-        </form>
-    </div>
+        <button type="submit">Send Message</button>
+    </form>
+    <p id="successMessage" class="success" style="display:none;">Message has been sent successfully!</p>
+</div>
 
-    <script>
-        function validateForm() {
-            let valid = true;
+<script>
+    // ✅ Validation Function
+    function validateForm() {
+        let valid = true;
+        document.getElementById("nameError").innerHTML = "";
+        document.getElementById("emailError").innerHTML = "";
+        document.getElementById("subjectError").innerHTML = "";
+        document.getElementById("messageError").innerHTML = "";
 
-            // Clear previous errors
-            document.getElementById("nameError").innerHTML = "";
-            document.getElementById("emailError").innerHTML = "";
-            document.getElementById("subjectError").innerHTML = "";
-            document.getElementById("messageError").innerHTML = "";
+        let name = document.getElementById("name").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let subject = document.getElementById("subject").value.trim();
+        let message = document.getElementById("message").value.trim();
 
-            // Get values
-            let name = document.getElementById("name").value.trim();
-            let email = document.getElementById("email").value.trim();
-            let subject = document.getElementById("subject").value.trim();
-            let message = document.getElementById("message").value.trim();
-
-            // Name validation
-            if (name === "") {
-                document.getElementById("nameError").innerHTML = "Please enter your name.";
-                valid = false;
-            }
-
-            // Email validation
-            let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-            if (email === "") {
-                document.getElementById("emailError").innerHTML = "Please enter your email.";
-                valid = false;
-            } else if (!email.match(emailPattern)) {
-                document.getElementById("emailError").innerHTML = "Please enter a valid email address.";
-                valid = false;
-            }
-
-            // Subject validation
-            if (subject === "") {
-                document.getElementById("subjectError").innerHTML = "Please enter a subject.";
-                valid = false;
-            }
-
-            // Message validation
-            if (message === "") {
-                document.getElementById("messageError").innerHTML = "Please enter your message.";
-                valid = false;
-            }
-
-            return valid;
+        if (name === "") { document.getElementById("nameError").innerHTML = "Please enter your name."; valid = false; }
+        
+        let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+        if (email === "") { 
+            document.getElementById("emailError").innerHTML = "Please enter your email."; 
+            valid = false; 
+        } else if (!email.match(emailPattern)) { 
+            document.getElementById("emailError").innerHTML = "Please enter a valid email address."; 
+            valid = false; 
         }
-    </script>
+        
+        if (subject === "") { document.getElementById("subjectError").innerHTML = "Please enter a subject."; valid = false; }
+        if (message === "") { document.getElementById("messageError").innerHTML = "Please enter your message."; valid = false; }
+
+        return valid;
+    }
+
+    // 💾 Save form data to localStorage (temporary storage while on page)
+    function saveFormData() {
+        localStorage.setItem('contactName', document.getElementById('name').value);
+        localStorage.setItem('contactEmail', document.getElementById('email').value);
+        localStorage.setItem('contactSubject', document.getElementById('subject').value);
+        localStorage.setItem('contactMessage', document.getElementById('message').value);
+    }
+
+    // 📥 Load form data from localStorage
+    function loadFormData() {
+        if (localStorage.getItem('contactName')) document.getElementById('name').value = localStorage.getItem('contactName');
+        if (localStorage.getItem('contactEmail')) document.getElementById('email').value = localStorage.getItem('contactEmail');
+        if (localStorage.getItem('contactSubject')) document.getElementById('subject').value = localStorage.getItem('contactSubject');
+        if (localStorage.getItem('contactMessage')) document.getElementById('message').value = localStorage.getItem('contactMessage');
+    }
+
+    // 🗑️ Clear localStorage data
+    function clearFormData() {
+        localStorage.removeItem('contactName');
+        localStorage.removeItem('contactEmail');
+        localStorage.removeItem('contactSubject');
+        localStorage.removeItem('contactMessage');
+    }
+
+    // 📁 Download form data as a file
+    function downloadFormData() {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value;
+
+        // Create file content
+        const formData = `Contact Us Form Submission
+        
+Date: ${new Date().toLocaleString()}
+Name: ${name}
+Email: ${email}
+Subject: ${subject}
+Message: ${message}`;
+
+        // Create and download file
+        const blob = new Blob([formData], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `contact-form-${new Date().getTime()}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    // 📌 Handle form submit
+    function handleSubmit(event) {
+        event.preventDefault();
+        if (validateForm()) {
+            downloadFormData(); // Download the data as file
+            clearFormData(); // Clear localStorage after successful submission
+            document.getElementById("successMessage").style.display = "block";
+            document.getElementById('contactForm').reset(); // Clear the form
+        }
+    }
+
+    // 🔄 Auto-save form data as user types (for temporary recovery)
+    function setupAutoSave() {
+        const inputs = document.querySelectorAll('#contactForm input, #contactForm textarea');
+        inputs.forEach(input => {
+            input.addEventListener('input', saveFormData);
+        });
+    }
+
+    // 🚪 Clear data when user leaves/exits the page
+    window.addEventListener('beforeunload', function() {
+        clearFormData();
+    });
+
+    // ⏳ Initialize when page loads
+    window.onload = function() {
+        loadFormData(); // Load any saved data
+        setupAutoSave(); // Set up auto-save on input changes
+    };
+</script>
 
 </body>
 </html>

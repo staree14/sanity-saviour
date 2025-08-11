@@ -72,7 +72,7 @@ footer {
 /* Dark Mode Styles */
 body.dark-mode {
     background-color: #333; /* Dark background */
-    color: white; /* Light text color */
+    color: #000000; /* Black font on white box */
 }
 
 header.dark-mode {
@@ -117,4 +117,5 @@ footer.dark-mode {
 .button.dark-mode:hover {
     background-color: #010814; /* Lighter color on hover */
 }
+
 

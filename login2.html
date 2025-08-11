@@ -25,18 +25,9 @@
             max-width: 400px;
             width: 100%;
         }
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        label {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+        h2 { text-align: center; color: #333; }
+        form { display: flex; flex-direction: column; }
+        label { margin-bottom: 5px; font-weight: bold; }
         input {
             margin-bottom: 15px;
             padding: 10px;
@@ -52,20 +43,11 @@
             font-size: 16px;
             cursor: pointer;
         }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .link {
-            text-align: center;
-            margin-top: 10px;
-        }
-        .link a {
-            color: #007BFF;
-            text-decoration: none;
-        }
-        .link a:hover {
-            text-decoration: underline;
-        }
+        button:hover { background-color: #0056b3; }
+        .link { text-align: center; margin-top: 10px; }
+        .link a { color: #007BFF; text-decoration: none; }
+        .link a:hover { text-decoration: underline; }
+        .success { color: green; text-align: center; margin-top: 10px; display: none; }
     </style>
 </head>
 <body>
@@ -73,7 +55,7 @@
         <!-- Login Form -->
         <div id="login-form">
             <h2>Login</h2>
-            <form action="/login" method="POST">
+            <form id="loginForm" onsubmit="return handleLogin(event)">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
 
@@ -82,7 +64,7 @@
 
                 <button type="submit">Login</button>
             </form>
-
+            <p class="success" id="loginSuccess">Login data saved & downloaded!</p>
             <div class="link">
                 <p>Don't have an account? <a href="javascript:void(0);" onclick="toggleForm('signup')">Sign up</a></p>
             </div>
@@ -91,7 +73,7 @@
         <!-- Sign-Up Form -->
         <div id="signup-form" style="display: none;">
             <h2>Create Profile</h2>
-            <form action="/signup" method="POST">
+            <form id="signupForm" onsubmit="return handleSignup(event)">
                 <label for="name">User name:</label>
                 <input type="text" id="name" name="name" required>
 
@@ -103,7 +85,7 @@
 
                 <button type="submit">Create Profile</button>
             </form>
-
+            <p class="success" id="signupSuccess">Signup data saved & downloaded!</p>
             <div class="link">
                 <p>Already have an account? <a href="javascript:void(0);" onclick="toggleForm('login')">Login</a></p>
             </div>
@@ -111,16 +93,102 @@
     </div>
 
     <script>
-        // Function to toggle between login and signup forms
+        // Toggle between forms
         function toggleForm(formType) {
-            if (formType === 'signup') {
-                document.getElementById('login-form').style.display = 'none';
-                document.getElementById('signup-form').style.display = 'block';
-            } else {
-                document.getElementById('signup-form').style.display = 'none';
-                document.getElementById('login-form').style.display = 'block';
-            }
+            document.getElementById('login-form').style.display = (formType === 'login') ? 'block' : 'none';
+            document.getElementById('signup-form').style.display = (formType === 'signup') ? 'block' : 'none';
         }
-    </script>    
+
+        // Save form data to localStorage
+        function saveLoginData() {
+            localStorage.setItem('loginEmail', document.getElementById('email').value);
+            localStorage.setItem('loginPassword', document.getElementById('password').value);
+        }
+        function saveSignupData() {
+            localStorage.setItem('signupName', document.getElementById('name').value);
+            localStorage.setItem('signupEmail', document.getElementById('signup-email').value);
+            localStorage.setItem('signupPassword', document.getElementById('signup-password').value);
+        }
+
+        // Load data from localStorage
+        function loadFormData() {
+            if (localStorage.getItem('loginEmail')) document.getElementById('email').value = localStorage.getItem('loginEmail');
+            if (localStorage.getItem('loginPassword')) document.getElementById('password').value = localStorage.getItem('loginPassword');
+            if (localStorage.getItem('signupName')) document.getElementById('name').value = localStorage.getItem('signupName');
+            if (localStorage.getItem('signupEmail')) document.getElementById('signup-email').value = localStorage.getItem('signupEmail');
+            if (localStorage.getItem('signupPassword')) document.getElementById('signup-password').value = localStorage.getItem('signupPassword');
+        }
+
+        // Clear data after submit
+        function clearLoginData() {
+            localStorage.removeItem('loginEmail');
+            localStorage.removeItem('loginPassword');
+        }
+        function clearSignupData() {
+            localStorage.removeItem('signupName');
+            localStorage.removeItem('signupEmail');
+            localStorage.removeItem('signupPassword');
+        }
+
+        // Download data as file
+        function downloadData(filename, content) {
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Handle login submit
+        function handleLogin(event) {
+            event.preventDefault();
+            saveLoginData();
+
+            const data = `Login Form Submission
+Date: ${new Date().toLocaleString()}
+Email: ${document.getElementById('email').value}
+Password: ${document.getElementById('password').value}`;
+
+            downloadData(`login-${Date.now()}.txt`, data);
+            clearLoginData();
+            document.getElementById('loginSuccess').style.display = "block";
+            document.getElementById('loginForm').reset();
+            return false;
+        }
+
+        // Handle signup submit
+        function handleSignup(event) {
+            event.preventDefault();
+            saveSignupData();
+
+            const data = `Signup Form Submission
+Date: ${new Date().toLocaleString()}
+Name: ${document.getElementById('name').value}
+Email: ${document.getElementById('signup-email').value}
+Password: ${document.getElementById('signup-password').value}`;
+
+            downloadData(`signup-${Date.now()}.txt`, data);
+            clearSignupData();
+            document.getElementById('signupSuccess').style.display = "block";
+            document.getElementById('signupForm').reset();
+            return false;
+        }
+
+        // Auto-save on input
+        function setupAutoSave() {
+            document.querySelectorAll('#loginForm input').forEach(input => input.addEventListener('input', saveLoginData));
+            document.querySelectorAll('#signupForm input').forEach(input => input.addEventListener('input', saveSignupData));
+        }
+
+        // Init on load
+        window.onload = function() {
+            loadFormData();
+            setupAutoSave();
+        };
+    </script>
 </body>
 </html>
